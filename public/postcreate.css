@@ -1,0 +1,56 @@
+.postinput{
+    font-family: 'body';
+    width: 100%;
+    padding: 12px 20px;
+    margin: 2px 0;
+    display: block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+.centererror{
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+    align-items: center;
+}
+
+.smallwidth{
+    width: 40% !important;
+}
+.rederr{
+    color: red;
+}
+
+form > textarea {
+    resize: none;
+}
+
+.error{
+    font-family: 'body';
+    padding: 12px 10px;
+    margin: 2px 0;
+    display: block;
+    border: 1px solid red;
+    border-radius: 4px;
+    box-sizing: border-box;
+    text-align: center;
+    color: red;
+    font-weight: 600;
+}
+
+.postbuttons > a{
+    font-size: small;
+}
+.postbuttons > a, .postbuttons > input, .postbuttons > div, .postbuttons > button{
+    margin: 0px 4px;
+}
+
+#showimg{
+    display: none;
+    object-fit: cover;
+    background-image: 100%;
+    width: 400px;
+    min-height: 300px;
+    padding-bottom: 20px;
+}

@@ -1,0 +1,82 @@
+<html>
+    <head>
+        <link rel="stylesheet" href="register.css" type="text/css">
+        <link rel="stylesheet" href="postcreate.css" type="text/css">
+        <link rel="stylesheet" href="styles.css" type="text/css">
+        <link rel="stylesheet" href="profile.css" type="text/css">
+
+        <script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+        <script type="text/javascript" src="myscript.js"></script>
+
+        <link rel="icon" href="sprites/icon.png">
+        <title>
+            DoggyMate
+        </title>
+    </head>
+
+    <body>
+        {{#unless success}}
+        <header>
+            {{>header}}
+        </header>
+
+        <section class="smallcontainer">
+            <div class="content">
+                <div class="title"> Account Settings </div>
+
+                {{#if error}}
+                <br>
+                <div class="centererror">
+                    <div class="error">{{error}}</div>
+                </div>
+                {{/if}}
+                <br>
+
+                {{#each users}}
+                <div class="postform">
+                    <form method="POST" action="editprofile{{_id}}"> 
+
+                        <br><span class="heading">User Settings</span><br><br>
+                        <div class="sameline">
+                            <div class="line1left">First Name</div>
+                            <div class="line2left"><input type="text" class="postinput" name="firstname" value="{{firstname}}" pattern="[A-Za-z]{1,25}" title="Should only contain letters and no spaces."></div>
+                            <div class="line1right">Last Name</div>
+                            <div class="line2right"><input type="text" class="postinput" name="lastname" value="{{lastname}}" pattern="[A-Za-z]{1,25}" title="Should only contain letters and no spaces."></div>
+                        </div><br>
+                        Email<input type="email" class="postinput" name="email" value="{{email}}"><br>
+                        
+                        <br><span class="heading">Password Settings</span><br><br>
+                        Enter New Password<input type="password" class="postinput" name="password" placeholder="Enter new password" pattern=".{8,}" title="Password should contain 8 or more characters."><br>
+                        Enter Current Password<input type="password" class="postinput" name="confirmpassword" placeholder="Confirm Password"><br>
+
+                        <a href="/deleteprofile{{_id}}" class="button bred floatleft" style="font-size: small;">Delete Account</a>
+
+                        <div class="postbuttons floatright">
+                            <a href="/profile-{{username}}" class="button bpurple">Cancel</a> 
+                            <input class="button bblue" type="submit" value="Save">
+                        </div>
+                    </form>
+                </div>
+                {{/each}}
+            </div>
+        </section>
+
+        <footer>
+            {{>footer}}
+        </footer>
+        {{/unless}}
+
+
+        {{#if success}}
+        <section class="smallestcontainer">
+            <div class="content">
+                <div class="centercontent">
+                    <span class="heading">{{success}}</span><br><br><br>
+                    <a href="/profile-{{username}}" class="button bpurple" style="font-size: small;">Back to Profile</a>
+                </div>
+            </div>
+        </section>
+        {{/if}}
+
+    </body>
+</html>

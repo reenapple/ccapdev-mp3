@@ -1,0 +1,80 @@
+<html>
+    <head>
+        <link rel="stylesheet" href="styles.css" type="text/css"> 
+        <link rel="stylesheet" href="postcreate.css" type="text/css"> 
+        
+        <script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+        <script type="text/javascript" src="myscript.js"></script>
+        
+        <link rel="icon" href="sprites/icon.png">
+        <title>
+            DoggyMate
+        </title>
+    </head>
+
+    <body>
+        <header>
+            {{>header}}
+        </header>
+
+        <section class="smallcontainer">
+            <div class="content">
+                <div class="title"> Post your Dog Details </div>
+                <br><br> 
+
+                <div class="postform">
+                    <form method="POST" action="createpost" enctype="multipart/form-data"> 
+
+                        {{#if e}}
+                            <div class="centererror"><div class="error">{{error}}</div></div>
+                        {{/if}} 
+                        Dog name{{#if e}}<span class="rederr">*</span>{{/if}} <input type="text" class="postinput" name="dogname"> <br> 
+                        Breed{{#if e}}<span class="rederr">*</span>{{/if}} <input type="text"  class="postinput" name="breed"> <br> 
+                        Location{{#if e}}<span class="rederr">*</span>{{/if}} <input type="text" class="postinput" name="location"> <br> 
+                        Age{{#if e}}<span class="rederr">*</span>{{/if}} <input type="number" class="postinput smallwidth" name="dogage" min="1"> <br> 
+                        Gender{{#if e}}<span class="rederr">*</span>{{/if}} <select class="postinput smallwidth" name="dogender"> 
+                            <option value="blank">-</option>
+                            <option value="female"> Female </option>
+                            <option value="male"> Male </option>
+                        </select>
+                        <br> 
+                        Short Description <textarea rows = "5" class="postinput bigheight" name="dogdesc"></textarea><br>
+                        
+                        Upload an Image{{#if e}}<span class="rederr">*</span>{{/if}} <input type="file" class="postinput smallwidth" id="inputimg" name="img" accept="image/*"><br>
+                        <div class="centerimg"><img id="showimg" src="#"/><br></div>
+
+                        <div class="postbuttons floatright">
+                            <a href="cancel" class="button bpurple">Cancel</a> 
+                            <input class="button bblue" type="submit" value="Post">
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <footer>
+            {{>footer}}
+        </footer>
+
+        <script>
+            function readURL(input) {
+                if (input.files && input.files[0]) {
+                    var reader = new FileReader();
+                    
+                    reader.onload = function (e) {
+                        $('#showimg').attr('src', e.target.result);
+                    }
+                    
+                    reader.readAsDataURL(input.files[0]);
+                }
+            }
+            
+            $("#inputimg").change(function(){
+                readURL(this);
+                $(".centerimg").show();
+                $("#showimg").show();
+            });
+        </script>
+
+    </body>
+</html>

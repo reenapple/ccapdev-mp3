@@ -1,0 +1,103 @@
+<html>
+    <head>
+         <link rel="stylesheet" href="styles.css" type="text/css">
+        
+		<script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+        <script type="text/javascript" src="myscript.js"></script>
+        
+        <link rel="icon" href="sprites/icon.png">
+        <title>
+            DoggyMate
+        </title>
+    </head>
+    <body>
+        <header>
+            {{>header}}
+        </header>
+
+        <section class="smallcontainer">
+            <div class="content">
+
+                <div class="title">Playdates</div>
+
+                <div class="reqbuttons">
+                    <a href="requests-sent" id="reqsent" class="heading {{#if sentrequestsbox}}underline{{/if}}">My Requests</a>
+                    <a href="requests-received" id="reqreceived" class="heading {{#if receivedrequestsbox}}underline{{/if}}">Requests Received</a>
+                </div>
+
+                {{#if sentrequestsbox}}
+                <div class="reqsent">
+                    <div class="reqdivider d1"></div>
+                    {{#unless sentrequests}}
+                    <div class="nonecenter">No requests sent yet</div>
+                    <div class="reqdivider d1"></div>
+                    {{/unless}}
+                    
+                    {{#each sentrequests}}
+                        <div class="reqmsg">
+                            <div class="reqmsgcontent">
+                                <div class="reqlabel">Furparent</div><div class="reqvalue"><a href="/profile-{{dogownername}}" class="reqlink">{{dogownername}}</a></div>
+                                <div class="reqlabel">Furparent's Dog</div><div class="reqvalue"><a href="/post{{dogownerdog_id}}" class="reqlink">{{dogownerdogname}}</a></div>
+                                <div class="reqlabel">Your Dog</div><div class="reqvalue"><a href="/post{{userdog_id}}" class="reqlink">{{userdogname}}</a></div>
+                                <div class="reqlabel">Venue</div><div class="reqvalue">{{venue}}</div>
+                                <div class="reqlabel">Date</div><div class="reqvalue">{{dateset}}</div>
+                                <div class="reqlabel">Time</div><div class="reqvalue">{{time}}</div>
+                            </div>
+                            <div class="approvebox">
+                                <div class="approval {{approval}}"></div> {{!approval values can be accepted/rejected/pending}}
+                                <br><span class="reqlabel">{{approval}}</span>
+                            </div>
+                            <div class="reqdelete"><a href="/rdelete{{_id}}" class="button bred" style="font-size: small;">Remove</a></div>
+                        </div>
+                        <div class="reqdivider d1"></div>
+                    {{/each}}
+                </div>
+                {{/if}}
+                
+                {{#if receivedrequestsbox}}
+                <div class="reqreceived">
+                    <div class="reqdivider d1"></div>
+
+                    {{#unless receivedrequests}}
+                        <div class="nonecenter">No requests received yet</div>
+                        <div class="reqdivider d1"></div>
+                    {{/unless}}
+
+                    {{#each receivedrequests}}
+                    <div class="reqmsg {{approval}}">
+                        <div class="reqmsgcontent">
+                            <div class="reqlabel">Furparent</div><div class="reqvalue"><a href="/profile-{{username}}" class="reqlink">{{username}}</a></div>
+                            <div class="reqlabel">Furparent's Dog</div><div class="reqvalue"><a href="/post{{userdog_id}}" class="reqlink">{{userdogname}}</a></div>
+                            <div class="reqlabel">Your Dog</div><div class="reqvalue"><a href="/post{{dogownerdog_id}}" class="reqlink">{{dogownerdogname}}</a></div>
+                            <div class="reqlabel">Venue</div><div class="reqvalue">{{venue}}</div>
+                            <div class="reqlabel">Date</div><div class="reqvalue">{{dateset}}</div>
+                            <div class="reqlabel">Time</div><div class="reqvalue">{{time}}</div>
+                        </div>
+                        {{#if pending}}
+                        <div class="receivebuttons">
+                            <a href="/raccept{{_id}}" class="button bblue">Accept</a>
+                            <a href="/rreject{{_id}}" class="button bpurple">Refuse</a>
+                        </div>
+                        {{/if}}
+                        {{#unless pending}}
+                        <div class="receivecheck">
+                            <div class="approval {{approval}}"></div>
+                        </div>
+                        {{/unless}}                        
+                        
+
+                    </div>
+                    <div class="reqdivider {{approval}} d1"></div>
+                    {{/each}}
+                </div>
+                {{/if}}
+
+
+            </div>
+        </section>
+
+        <footer>
+            {{>footer}}
+        </footer>
+    </body>
+</html>

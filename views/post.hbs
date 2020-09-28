@@ -1,0 +1,110 @@
+<html>
+    <head>
+        <link rel="stylesheet" href="styles.css" type="text/css">
+        <link rel="stylesheet" href="post.css" type="text/css">
+        <link rel="stylesheet" href="postcreate.css" type="text/css"> 
+
+		<script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+        <script type="text/javascript" src="myscript.js"></script>
+        
+        <link rel="icon" href="sprites/icon.png">
+        <title>
+            DoggyMate
+        </title>
+    </head>
+
+    <body>
+        <header>{{>header}}</header>
+
+            <section class="postcontainer" id="containerpost">
+                <div class="postcontent">
+                    <div class="realpostcontent">
+                        {{#each dogpost}}
+                        <div class="titlepost"> Details </div>
+                            <!--for postedit-->
+                        {{#if loggedisme}}
+                        <div class="editbutton">
+                            <a href="/postedit{{_id}}" class="button bblue floatright" id="editbutton" style="font-size:smaller;">Edit Post</a>
+                        </div>
+                        {{/if}}
+
+                        <div class="dogpicture">
+                            <img class="mainpic" src="/photo/{{_id}}"><br>
+                        </div>
+
+                        <div class="postdetails">
+                            <span class="reqlabel">Name:</span> <span class="reqvalue">{{dogname}}</span><br><br>
+                            <span class="reqlabel">Gender:</span> <span class="reqvalue">{{gender}}</span><br><br>
+                            <span class="reqlabel">Breed:</span> <span class="reqvalue">{{breed}}</span><br><br>
+                            <span class="reqlabel">Age:</span> <span class="reqvalue">{{dogage}}</span><br><br>
+                            <span class="reqlabel">Location:</span> <span class="reqvalue">{{location}}</span><br><br>
+                            <span class="reqlabel">Description:</span> <span class="reqvalue">{{dogdesc}}</span><br><br>
+                            <button type="button" class="button bblue {{#unless logged}}bdisabled{{/unless}}" onclick="openform()" {{#if loggedisme}}style="display: none;"{{/if}}>Play With Me!</button><br><br>
+                            <span class="reqlabel">Posted by:</span> <a href="/profile-{{username}}" class="reqlink">{{username}}</a><br><br>
+                            <span class="reqlabel">Date Posted:</span> <span class="reqvalue">{{currentDate}}</span><br><br>
+                            <a href="/prevpage" class="button bpurple" style="font-size: smaller;">Back</a>
+                        {{/each}}
+                        </div>                        
+                    </div>
+                </div>  
+            </section>
+            
+            <div class="popup" id="popupform">
+                <div class="popupcontent">
+                    <div class="title"> Request Form </div>
+
+                    <form class="formcontent" method="POST" action="sendrequest">
+                        {{#each dogpost}}
+                            <input type="hidden" name="dogownerdog_id" value="{{_id}}">
+                            <input type="hidden" name="dogownerdogname" value="{{dogname}}">
+                            <input type="hidden" name="dogownername" value="{{username}}">
+                        {{/each}}
+                        {{#if dogpostreq}}<input type="hidden" name="username" value="{{username}}">{{/if}}
+                        Your Dog's Name<select class="postinput" name="userdog_id"> 
+                            <option value="blank">-</option>
+                            {{#each dogpostreq}}<option value="{{_id}}"> {{dogname}} </option>{{/each}}
+                        </select>
+                        Venue <input type="text" class="postinput" name="venue"> <br>
+                        Date <input id="datefield" type="date" class="postinput smallwidth" name="date"> <br> 
+                        Time <input type="time" class="postinput smallwidth" name="time"> <br> 
+                        <div class="postbuttons floatright">
+                            <button  type="button" class="button bpurple" onclick="closeform()">Cancel</button>
+                            <input id="reqformsubmit" class="button bblue" type="submit" value="Send Request">
+                        </div>
+                   </form>
+                </div>
+              </div>
+
+        <footer>{{>footer}}</footer>
+
+        <script>
+            function closeform(){
+                document.getElementById("popupform").style.display = "none"
+                document.getElementById("containerpost").style.opacity = 1
+                $('header').css("opacity", "1")
+                $('footer').css("opacity", "1")
+                
+            }
+
+            function openform(){
+                document.getElementById("popupform").style.display = "block"
+                document.getElementById("containerpost").style.opacity = 0.5
+                $('header').css("opacity", "0.5")
+                $('footer').css("opacity", "0.5")
+            }
+
+            var today = new Date();
+            var dd = today.getDate();
+            var mm = today.getMonth()+1; //January is 0!
+            var yyyy = today.getFullYear();
+            if(dd<10){
+                dd='0'+dd
+            } 
+            if(mm<10){
+                mm='0'+mm
+            }
+            today = yyyy+'-'+mm+'-'+dd;
+            document.getElementById("datefield").setAttribute("min", today);
+        </script>
+    </body>
+</html>

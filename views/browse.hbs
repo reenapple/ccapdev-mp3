@@ -1,0 +1,71 @@
+<html>
+    <head>
+        <link rel="stylesheet" href="styles.css" type="text/css">
+        <link rel="stylesheet" href="postcreate.css" type="text/css">
+        
+		<script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+        <script type="text/javascript" src="myscript.js"></script>
+
+        <link rel="icon" href="sprites/icon.png">
+        <title>
+            DoggyMate
+        </title>
+    </head>
+    <body>
+        <header>
+            {{>header}}
+        </header>
+
+        <section class="container">
+            <div class="content">
+
+                <div class="title">Find a Friend for Your Dog!</div>
+                <br>
+
+                <div>
+                    <form method="get" action="search" class="search">
+                        <input type="text" class="searchbar" placeholder="Search..." name="q">
+                        <input class="searchbutton" type="submit" value="">
+                    </form>
+                </div>
+
+                <div class="browsesort">Sort by:
+                    <div class="browsedropdown">{{#if bynew}}Newest{{/if}}{{#if bybreed}}Breed{{/if}} ▼
+                        <div class="browsedropdowncontent">
+                            <a href="/sortbynew" class="navlink">Newest</a>
+                            <a href="/sortbybreed" class="navlink">Breed</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="center">
+                    <div class="pagination">
+                        {{#each pages}}
+                            <a href="/page:{{pagenum}}" class="{{#if pageselected}}pageselected{{/if}}">{{pagenum}}</a>
+                        {{/each}}
+                    </div>
+                </div>
+                <div class="allposts">
+                    {{#each dogpost}} 
+                        <a href="/post{{_id}}" class="dogpost-browse {{gender}}">
+                            <div class="dogpicture-browse"><img src="/photo/{{_id}}" class="pic-browse"></div>
+                            <div class="dogname-browse title">{{dogname}}</div>
+                            <div class="dogbreed-browse body">({{breed}})</div>
+                        </a>
+                    {{/each}}
+                </div>
+                <div class="center">
+                    <div class="pagination">
+                        {{#each pages}}
+                            <a href="/page:{{pagenum}}" class="{{#if pageselected}}pageselected{{/if}}">{{pagenum}}</a>
+                        {{/each}}
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <footer>
+            {{>footer}}
+        </footer>
+    </body>
+</html>

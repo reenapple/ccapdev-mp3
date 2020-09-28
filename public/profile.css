@@ -1,0 +1,41 @@
+.profilecontainer{
+    padding: 12px;
+    display: grid;
+    grid-template-rows: 20px 1fr;
+    grid-template-columns: 10% 220px 1fr 200px 10%;
+    grid-template-areas:". . . button ."
+                        ". pic details details .";
+}
+.profilecontainer > div {
+    margin: 10px;
+}
+.buttoncontainer{
+    grid-area: button;
+}
+.imgcontainer{
+    grid-area: pic;
+    display: block;
+    margin: auto;
+}
+.imguser{
+    object-fit: cover;
+    background-size: 100%;
+    width: 220px;
+    height: 220px;
+    border-radius: 50%;
+}
+.userprofilebold{
+    font-family: 'title';
+    font-size: 40px;
+}
+.userprofile{
+    font-family: 'heading';
+    font-size: 26px;
+}
+.detailscontainer{
+    grid-area: details;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-left: 50px;
+}

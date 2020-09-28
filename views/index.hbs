@@ -1,0 +1,95 @@
+<html>
+    <head>
+         <link rel="stylesheet" href="styles.css" type="text/css">
+        
+		<script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+        <script type="text/javascript" src="myscript.js"></script>
+        
+        <link rel="icon" href="sprites/icon.png">
+        <title>
+            DoggyMate
+        </title>
+    </head>
+    <body>
+        <header>
+            {{>header}}
+        </header>
+
+        <section class="container">
+            <div class="content">
+                
+                <div class="divider d1"></div>
+                <div class="titlelogo">
+                    D<div id="indexicon"></div>ggyMate
+                </div>
+                <div class="center">A doggy playdate website</div>
+                <div class="divider d1"></div><br>
+
+
+                <div class="homesection divide indexbrp">
+                    <div class="hsec hleft">
+                        <div class="title underline">Browse</div>
+                        <div class="body center">With our active and friendly dog community, you can easily browse and find the right buddy to play with your dog.</div>
+                    </div>
+                    <div class="hsec hmid">
+                        <div class="title underline">Request</div>
+                        <div class="body center">Send a playdate request straight to the pawrent and wait for their approval. You might even get a playdate request yourself!</div>
+                    </div>
+                    <div class="hsec hright">
+                        <div class="title underline">Play</div>
+                        <div class="body center">Once the pawrent approves your request, you can now let your dog have some fun with his or her new friends.</div>
+                    </div>
+                </div>
+                <div class="divider d1"></div>
+
+
+                <div class="divide">
+                    <div class="center title">Recent Posts</div>
+                    <div class="topdog">
+                    {{#each dogpost}} 
+                        <div class="dogpost-home">
+                            <div class="dogpicture-home"><img class="pic-home" src="/photo/{{_id}}"></div>
+                            <div class="dogname-home heading">{{dogname}}</div>
+                        </div>
+                    {{/each}}
+                    </div>
+                    <a href="browse" class="floatright button bblue">See More</a>
+                </div> 
+                <div class="divider d1"></div>
+                
+                
+
+                <div class="homesection divide">
+                    <div class="sec-left-content justify">
+                        Think your dog is lonely? DoggyMate helps pawrents <span class="underline1">all around the world</span> be able to set up playdates with other dogs. It helps their dogs meet new dogs, and even let pawrents meet other pawrents! Instead of walking around alone with your dog, DoggyMate lets you have company in your long walks or other doggy outdoor activities to make it even more enjoyable.
+                        <br><br>
+                        There are pawrents out there that may be having a hard time doing outdoor activities with their dogs without a buddy. Good dog buddies also help build the character of your own dog as well as the dog you are having a playdate with. It is never a bad time to gain new buddies.
+                    </div>
+                    <div class="sec-right-image himg"></div>
+                </div>
+
+                <div class="homesection divide">
+                    <div class="sec-left-image himg"></div>
+                    <div class="sec-right-content justify">
+                        From the variety of content that have been posted by pawrents in the DoggyMate community, now you can set a playdate <span class="underline1">any time</span> and <span class="underline1">any place</span> just with a push of a button! It's doggy dating made easy. Now your dog will never be alone when he or she goes out on walks to the park, swimming by the beach, or even hiking in the mountains.
+                        <br><br>
+                        Meet pawrents and share your experiences with one another while your dogs joyfully play around the area. Who knows, maybe you can even learn something new for your dog.
+                    </div>
+                </div>
+
+                <div class="divider d1"></div>                          
+
+                {{#unless username}}
+                    <div class="divide center">
+                        <div class="heading">Don't have an account?</div><br>
+                        <a href="register" class="button bpurple">Sign up now!</a>
+                    </div>
+                {{/unless}}
+            </div>
+        </section>
+
+        <footer>
+            {{>footer}}
+        </footer>
+    </body>
+</html>

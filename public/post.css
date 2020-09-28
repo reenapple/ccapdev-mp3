@@ -1,0 +1,73 @@
+.postcontainer{
+    position: relative;
+    display: grid;
+    grid-template-columns: auto 850px auto;   
+    grid-template-areas: ". content .";
+    min-height: 90%;
+}
+
+.postcontent{
+    background-color: white;
+    border-radius: 6px;
+    padding: 30px;
+    box-shadow: 0 10px 40px -14px rgba(0,0,0,0.25);
+    margin-top: 80px;
+    grid-area: content; 
+    margin-bottom: 30px;
+}
+
+.realpostcontent{
+    display: grid;
+    grid-template-areas:"title title button" 
+                        "pic details details"; 
+}
+.editbutton{
+    grid-area: button;
+    padding-right: 20px;
+}
+
+.titlepost{
+    grid-area: title;
+    font-size: 35px;
+    font-family: 'title';
+    padding-bottom: 10px;
+    text-align: center;
+}
+
+.postdetails {
+    grid-area: details;
+    width: 350px;
+}
+
+.dogpicture{
+    grid-area: pic;
+    margin: 0px 30px;
+    text-align: center;
+}
+
+.mainpic{
+    object-fit: cover;
+    width: 400px;
+    min-height: 300px;
+    border-radius: 5px;
+}
+
+.popup{
+    display: none;
+    position: absolute;
+    width: 500px;
+    min-height: 400px;
+    top: 50%;
+    left: 50%;
+    margin-top: -260px; 
+    margin-left: -250px;
+    
+    z-index: 9;
+    background-color: white;
+    border-radius: 6px;
+    padding: 20px;
+}
+
+.formcontent{
+    background-color: white;
+}

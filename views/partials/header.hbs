@@ -1,0 +1,24 @@
+<nav class="homeheader">
+    <ul class="navul">
+        <li class="navleft floatleft"><a class="homenavlink" href="/"><div class="navtitlelogo">D<div id="navicon"></div>ggyMate</div></a></li>
+        <li class="navleft floatleft"><a class="homenavlink" href="browse">Find a Doggy Friend</a></li>
+        <li class="navleft floatleft"><a class="homenavlink" href="about">About</a></li>
+        {{#unless username}}
+            <li class="navright floatright"><a class="button bpurple" href="register">Sign up</a></li>
+            <li class="navright floatright"><a class="homenavlink" href="login">Login</a></li>
+        {{/unless}}
+        {{#if username}}
+            <li class="navright floatright">
+                <div class="navdropdown homenavlink">{{username}} ▼
+                    <div class="navdropdowncontent">
+                        <a class="homenavlink" href="profile-{{username}}">My Profile</a>
+                        <a class="homenavlink" href="settings-{{username}}">Settings</a>
+                        <a class="homenavlink" href="logout">Logout</a>
+                    </div>
+                </div>
+            </li>
+            <li class="navright floatright"><a class="homenavlink" href="requests-sent">My Playdates</a></li>
+            <li class="navright floatright"><a class="homenavlink" href="postcreate">Add My Dog</a></li>
+        {{/if}}
+    </ul>
+</nav>
