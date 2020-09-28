@@ -1,7 +1,7 @@
 {
   "name": "mp2_3",
   "version": "1.0.0",
-  "description": "",
+  "description": "��#\u0000 \u0000c\u0000c\u0000a\u0000p\u0000d\u0000e\u0000v\u0000-\u0000m\u0000p\u00003\u0000\r\u0000 \u0000",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -20,5 +20,17 @@
     "mongoose": "^5.10.3",
     "multer": "^1.4.2",
     "path": "^0.12.7"
-  }
+  },
+  "engines": {
+    "node": "12.18.3"
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/reenapple/ccapdev-mp3.git"
+  },
+  "bugs": {
+    "url": "https://github.com/reenapple/ccapdev-mp3/issues"
+  },
+  "homepage": "https://github.com/reenapple/ccapdev-mp3#readme"
 }
