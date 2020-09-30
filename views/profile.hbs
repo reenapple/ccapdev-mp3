@@ -22,7 +22,7 @@
                 {{#each user}}
                     <div class="profilecontainer">
                         <div class="imgcontainer">
-                            <img class="imguser" src="/userphoto/{{_id}}">
+                            <img class="imguser" src="data:image/{{img.contentType}};base64,{{#tobase64 img.data}}{{/tobase64}}">
                         </div>
                         <div class="detailscontainer">
                             <span class="userprofilebold">{{firstname}} {{lastname}}</span>
@@ -30,21 +30,20 @@
                         </div>
                     </div>
                     <div class="reqdivider d1"></div>
-                    {{#unless dogpost}}
-                        <div class="nonecenter">{{#if isme}}You have{{/if}}{{#unless isme}}This user has{{/unless}} no posts yet</div>
-                    {{/unless}}
-                    <div class="allposts">
-                        {{#each dogpost}} 
-                            <a href="/post{{_id}}" class="dogpost-browse {{gender}}">
-                                <div class="dogpicture-browse"><img src="/photo/{{_id}}" class="pic-browse"></div>
-                                <div class="dogname-browse title">{{dogname}}</div>
-                                <div class="dogbreed-browse body">({{breed}})</div>
-                            </a>
-                        {{/each}}
-                    </div>
                 {{/each}}
+                {{#unless dogpost}}
+                    <div class="nonecenter">{{#if isme}}You have{{/if}}{{#unless isme}}This user has{{/unless}} no posts yet</div>
+                {{/unless}}
+                <div class="allposts">
+                    {{#each dogpost}} 
+                        <a href="/post{{_id}}" class="dogpost-browse {{gender}}">
+                            <div class="dogpicture-browse"><img src="data:image/{{img.contentType}};base64,{{#tobase64 img.data}}{{/tobase64}}" class="pic-browse"></div>
+                            <div class="dogname-browse title">{{dogname}}</div>
+                            <div class="dogbreed-browse body">({{breed}})</div>
+                        </a>
+                    {{/each}}
                 </div>
-            </div>
+                </div>
         </section>
 
         <footer>

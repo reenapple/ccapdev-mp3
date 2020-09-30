@@ -29,7 +29,7 @@
                         {{/if}}
 
                         <div class="dogpicture">
-                            <img class="mainpic" src="/photo/{{_id}}"><br>
+                            <img class="mainpic" src="data:image/{{img.contentType}};base64,{{#tobase64 img.data}}{{/tobase64}}"><br>
                         </div>
 
                         <div class="postdetails">

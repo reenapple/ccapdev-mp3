@@ -9,6 +9,7 @@ const moment = require("moment")
 const multer = require("multer")
 const fs = require("fs")
 const crypto = require("crypto")
+const btoa = require("btoa")
 const dogPost = require("./models/dogposts.js").dogPost
 const Requests = require("./models/requests.js").Requests
 const Users = require("./models/users.js").Users
@@ -20,15 +21,12 @@ mongoose.connect("mongodb+srv://reenapple:47yMLTXSA6qxa4tv@cluster0.0j7bt.mongod
     useNewUrlParser: true,
     useUnifiedTopology: true
 })
-
-const UPLOAD_PATH = path.resolve(__dirname, "uploads")
-const upload = multer({
-    dest: UPLOAD_PATH,
-    limits:{
-        filesize: 10000000, 
-        files: 2
+const storage = multer.diskStorage({
+    destination: function (req, res, cb) {
+        cb(null, 'uploads/')
     }
 })
+const upload = multer({ storage: storage });
 
 app.use(session({
     secret: "very secret",
@@ -47,9 +45,14 @@ const urlencoder = bodyparser.urlencoded({
     extended: false
 })
 
+app.set("view engine", "hbs")
+
 hbs.registerPartials(__dirname + '/views/partials');
 
-app.set("view engine", "hbs")
+hbs.handlebars.registerHelper('tobase64', function(buffer) {
+    var b64 = btoa(buffer)
+    return b64
+})
 
 //start of index
 app.get("/", function(req, res){
@@ -249,7 +252,6 @@ app.post("/editpost:_id", urlencoder, (req,res)=>{
     data.username = req.session.username
 
     if(dogname==""||breed==""||dogage==""||location==""){ 
-        console.log("inc")
         dogPost.find({'_id': req.params._id}).then((doc)=>{
             data.dogpost = doc
             data.error = "Incomplete input"
@@ -257,7 +259,6 @@ app.post("/editpost:_id", urlencoder, (req,res)=>{
             res.render("postedit.hbs", data)
         })
     }else{
-        console.log("nasa else ako")
         dogPost.find({'_id': req.params._id}).then((doc)=>{
             data.dogpost = doc
     
@@ -334,8 +335,6 @@ app.post("/createpost", upload.single("img"), (req,res)=>{
         err.error = "Incomplete input"
         res.render("postcreate.hbs", err)
     }else{
-        let filename = req.file.filename
-        let originalfilename = req.file.originalname
 
         let datecreated = new Date();
         
@@ -347,10 +346,11 @@ app.post("/createpost", upload.single("img"), (req,res)=>{
             dogage: dogage, 
             gender: dogender, 
             dogdesc: dogdesc,
-            datecreated: datecreated, 
-            filename: filename, 
-            originalfilename: originalfilename
+            datecreated: datecreated
             })
+        
+        dogpost.img.data = fs.readFileSync(req.file.path)
+        dogpost.img.contentType = 'image/jpeg';
    
         dogpost.save().then((doc)=>{
             console.log("Successfully added: " + doc)
@@ -368,14 +368,6 @@ app.get("/cancel", (req,res)=>{
 // end for creating a post 
 
 // start for seeing a specific post 
-app.get("/photo/:_id", (req, res)=>{
-    dogPost.findOne({_id: req.params._id}).then((doc)=>{
-        fs.createReadStream(path.resolve(UPLOAD_PATH, doc.filename)).pipe(res)
-      }, (err)=>{
-        console.log(err)
-        res.sendStatus(404)
-      })
-})
 
 app.get("/post:_id", function(req,res){
     let data = {}
@@ -602,8 +594,6 @@ app.post("/signup", upload.single("userimg"), (req,res)=>{
                 let salt = crypto.randomBytes(16).toString('hex')
                 let hash = crypto.pbkdf2Sync(password, salt, 1000, 64, 'sha512').toString('hex')
                 req.session.username = username
-                let filename = req.file.filename
-                let originalfilename = req.file.originalname
 
                 let user = new Users({
                     firstname:firstname,
@@ -611,11 +601,11 @@ app.post("/signup", upload.single("userimg"), (req,res)=>{
                     email:email,
                     username:username,
                     salt: salt,
-                    hash: hash,
-                    filename: filename, 
-                    originalfilename: originalfilename
-
+                    hash: hash
                 })
+
+                user.img.data = fs.readFileSync(req.file.path)
+                user.img.contentType = 'image/jpeg';
 
                 user.save().then((doc)=>{
                     console.log("Successfully added: " + doc)
@@ -629,15 +619,6 @@ app.post("/signup", upload.single("userimg"), (req,res)=>{
     }
 })
 
-app.get("/userphoto/:_id", (req, res)=>{
-    Users.findOne({_id: req.params._id}).then((doc)=>{
-        fs.createReadStream(path.resolve(UPLOAD_PATH, doc.filename)).pipe(res)
-      }, (err)=>{
-        console.log(err)
-        res.sendStatus(404)
-      })
-})
-
 app.get("/profile-:username", (req,res)=>{
     let data = {}
     req.session.page = 1
@@ -647,23 +628,20 @@ app.get("/profile-:username", (req,res)=>{
     if(req.session.username){
         data.username = req.session.username
     }
-    
-    Users.aggregate([
-        {$match: {'username': req.params.username}},
-        {$lookup:
-            {
-              from: "dogposts",
-              localField: 'username',
-              foreignField: 'username',
-              as: "dogpost"
-            }
-       }
-     ]).then((doc)=>{
-        data.user = doc
-        if(data.user[0].username == req.session.username){
-            data.user[0].isme = true
+    Users.find({username: req.params.username}).then((doc)=>{
+        if(doc.length == 0){
+            res.send("ERROR: user does not exist")
+        }else{
+            data.user = doc
+            dogPost.find({username: req.params.username}).then((doc)=>{
+                data.dogpost = doc
+                if(data.user[0].username == req.session.username){
+                    data.isme = true
+                }
+                console.log(data)
+                res.render("profile.hbs", data)
+            })
         }
-        res.render("profile.hbs", data)
     })
     
 })

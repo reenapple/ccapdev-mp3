@@ -9,8 +9,10 @@ let dogPost = mongoose.model("dogpost",{
     gender: String, 
     dogdesc: String,
     datecreated: Date,
-    filename: String, 
-    originalfilename: String
+    img: {
+        data: Buffer,
+        contentType: String
+    }
 })
 
 module.exports = {

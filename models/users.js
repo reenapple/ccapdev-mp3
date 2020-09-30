@@ -7,8 +7,10 @@ let Users = mongoose.model("users",{
     firstname: String,
     lastname: String,
     email: String,
-    filename: String,
-    originalfilename: String
+    img: {
+        data: Buffer,
+        contentType: String
+    }
 })
 
 module.exports = {

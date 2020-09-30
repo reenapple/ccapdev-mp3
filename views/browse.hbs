@@ -48,7 +48,7 @@
                 <div class="allposts">
                     {{#each dogpost}} 
                         <a href="/post{{_id}}" class="dogpost-browse {{gender}}">
-                            <div class="dogpicture-browse"><img src="/photo/{{_id}}" class="pic-browse"></div>
+                            <div class="dogpicture-browse"><img src="data:image/{{img.contentType}};base64,{{#tobase64 img.data}}{{/tobase64}}" class="pic-browse"></div>
                             <div class="dogname-browse title">{{dogname}}</div>
                             <div class="dogbreed-browse body">({{breed}})</div>
                         </a>

@@ -48,7 +48,7 @@
                     <div class="topdog">
                     {{#each dogpost}} 
                         <div class="dogpost-home">
-                            <div class="dogpicture-home"><img class="pic-home" src="/photo/{{_id}}"></div>
+                            <div class="dogpicture-home"><img class="pic-home" src="data:image/{{img.contentType}};base64,{{#tobase64 img.data}}{{/tobase64}}"></div>
                             <div class="dogname-home heading">{{dogname}}</div>
                         </div>
                     {{/each}}
